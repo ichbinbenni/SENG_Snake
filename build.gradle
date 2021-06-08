@@ -11,4 +11,5 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "io.socket:socket.io-client:2.0.1"
 }
