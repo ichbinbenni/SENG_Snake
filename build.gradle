@@ -1,5 +1,7 @@
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.5.10'
+    id("org.openjfx.javafxplugin") version "0.0.10"
 }
 
 group 'org.example'
@@ -12,4 +14,8 @@ repositories {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "io.socket:socket.io-client:2.0.1"
+    implementation 'com.google.code.gson:gson:2.8.7'
+}
+javafx {
+    modules("javafx.controls", "javafx.fxml")
 }
