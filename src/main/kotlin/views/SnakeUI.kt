@@ -1,6 +1,6 @@
 package views;
 
-import gameLogic.SnakePart
+import gamelogic.SnakePart
 
 // TODO
 //class SnakeUI: Application {

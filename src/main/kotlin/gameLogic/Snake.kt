@@ -1,74 +1,134 @@
-package gameLogic;
+package gamelogic
 
 class Snake (private var color: String,
              startX: Int,
              startY: Int,
+             //private var direction: SnakeDirection,
              private var direction: String,
-             val allSnakes: HashMap<SnakePart, String>,
-             var gridSize: Int) {
+             private var allSnakes: HashMap<SnakePart, String>) {
 
-    var dead: Boolean
-    private var head: SnakePart = SnakePart(startX, startY)
-    private var parts: List<SnakePart>
+    // var dead = false
+    var head: SnakePart = SnakePart(startX, startY)
+    private var parts = arrayListOf(this.head)
 
     init {
-        this.parts = arrayListOf(this.head)
-        this.dead = false
-        allSnakes.put(head, color)
+        allSnakes[head] = color
+        for(i in 0..2) {
+            addPart()
+        }
     }
 
     fun pressedW() {
-        if(direction == "north" || direction == "south") {
-            return;
-        }
-        val current: SnakePart
-        val predecessor: SnakePart
-        
-        allSnakes.remove(parts.get(parts.size-1));  // funktioniert eventuell nicht, siehe Kommentar checkCollisions()
-//        for(val i: Int = parts.size-1; i > 0; i--) {
-//            current = parts.get(i);
-//            predecessor = parts.get(i-1);
-//            current.setPosX(predecessor.getPosX());
-//            current.setPosY(predecessor.getPosY());
-//        }
-        head.posY = head.posY - 1  // Zeile bei S, A und D ändern
-        allSnakes.put(head, color)
-
-        direction = "north";
-    }
-
-    fun pressedS() {
+        //if(direction == SnakeDirection.NORTH || direction == SnakeDirection.SOUTH) {
         if(direction == "north" || direction == "south") {
             return
         }
+        moveTail()
+        head.posY -= 1
+        allSnakes[head] = color
+
+        //direction = SnakeDirection.NORTH
+        direction = "north"
+    }
+
+    fun pressedS() {
+        //if(direction == SnakeDirection.NORTH || direction == SnakeDirection.SOUTH) {
+        if(direction == "north" || direction == "south") {
+            return
+        }
+
+        moveTail()
+        head.posY +=  1
+        allSnakes[head] = color
         
-        
+        //direction = SnakeDirection.SOUTH
         direction = "south"
     }
 
     fun pressedA() {
-        if(direction == "west" || direction == "east") {
+        //if(direction == SnakeDirection.WEST || direction == SnakeDirection.EAST) {
+        if(direction == "east" || direction == "west") {
             return
         }
+
+        moveTail()
+        head.posX -= 1
+        allSnakes[head] = color
         
-        
+        //direction = SnakeDirection.WEST
         direction = "west"
     }
 
     fun pressedD() {
-        if(direction == "west" || direction == "east") {
+        //if(direction == SnakeDirection.WEST || direction == SnakeDirection.EAST) {
+        if(direction == "east" || direction == "west") {
             return
         }
+
+        moveTail()
+        head.posX += 1
+        allSnakes[head] = color
         
-        
+        //direction = SnakeDirection.EAST
         direction = "east"
     }
 
     fun moveForward() {
+        moveTail()
 
+        when(direction) {
+            //SnakeDirection.NORTH -> {
+            "north" -> {
+                head.posY -= 1
+            }
+            //SnakeDirection.SOUTH -> {
+            "south" -> {
+                head.posY += 1
+            }
+            //SnakeDirection.EAST -> {
+            "east" -> {
+                head.posX += 1
+            }
+            //SnakeDirection.WEST -> {
+            "west" -> {
+                head.posX -= 1
+            }
+        }
+
+        allSnakes[head] = color
     }
 
     fun addPart() {
+        var newPart = SnakePart(0, 0)
 
+        when(direction) {
+            "north" -> {
+                newPart = SnakePart(parts[parts.size-1].posX, parts[parts.size-1].posY+1)
+            }
+            "south" -> {
+                newPart = SnakePart(parts[parts.size-1].posX, parts[parts.size-1].posY-1)
+            }
+            "east" -> {
+                newPart = SnakePart(parts[parts.size-1].posX-1, parts[parts.size-1].posY)
+            }
+            "west" -> {
+                newPart = SnakePart(parts[parts.size-1].posX+1, parts[parts.size-1].posY)
+            }
+        }
+        parts.add(newPart)
+        allSnakes[newPart] = color
+    }
+
+    private fun moveTail() {
+        var current: SnakePart
+        var predecessor: SnakePart
+
+        allSnakes.remove(parts[parts.size-1])  // funktioniert eventuell nicht, wegen Suche nach Referenz
+        for(i in (parts.size-1)..1) {
+            current = parts[i]
+            predecessor = parts[i-1]
+            current.posX = predecessor.posX
+            current.posY = predecessor.posY
+        }
     }
 }
