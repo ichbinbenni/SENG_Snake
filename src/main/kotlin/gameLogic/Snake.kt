@@ -3,11 +3,9 @@ package gamelogic
 class Snake (private var color: String,
              startX: Int,
              startY: Int,
-             //private var direction: SnakeDirection,
-             private var direction: String,
+             private var direction: SnakeDirection,
              private var allSnakes: HashMap<SnakePart, String>) {
 
-    // var dead = false
     var head: SnakePart = SnakePart(startX, startY)
     private var parts = arrayListOf(this.head)
 
@@ -19,21 +17,18 @@ class Snake (private var color: String,
     }
 
     fun pressedW() {
-        //if(direction == SnakeDirection.NORTH || direction == SnakeDirection.SOUTH) {
-        if(direction == "north" || direction == "south") {
+        if(direction == SnakeDirection.NORTH || direction == SnakeDirection.SOUTH) {
             return
         }
         moveTail()
         head.posY -= 1
         allSnakes[head] = color
 
-        //direction = SnakeDirection.NORTH
-        direction = "north"
+        direction = SnakeDirection.NORTH
     }
 
     fun pressedS() {
-        //if(direction == SnakeDirection.NORTH || direction == SnakeDirection.SOUTH) {
-        if(direction == "north" || direction == "south") {
+        if(direction == SnakeDirection.NORTH || direction == SnakeDirection.SOUTH) {
             return
         }
 
@@ -41,13 +36,11 @@ class Snake (private var color: String,
         head.posY +=  1
         allSnakes[head] = color
         
-        //direction = SnakeDirection.SOUTH
-        direction = "south"
+        direction = SnakeDirection.SOUTH
     }
 
     fun pressedA() {
-        //if(direction == SnakeDirection.WEST || direction == SnakeDirection.EAST) {
-        if(direction == "east" || direction == "west") {
+        if(direction == SnakeDirection.WEST || direction == SnakeDirection.EAST) {
             return
         }
 
@@ -55,13 +48,11 @@ class Snake (private var color: String,
         head.posX -= 1
         allSnakes[head] = color
         
-        //direction = SnakeDirection.WEST
-        direction = "west"
+        direction = SnakeDirection.WEST
     }
 
     fun pressedD() {
-        //if(direction == SnakeDirection.WEST || direction == SnakeDirection.EAST) {
-        if(direction == "east" || direction == "west") {
+        if(direction == SnakeDirection.WEST || direction == SnakeDirection.EAST) {
             return
         }
 
@@ -69,28 +60,23 @@ class Snake (private var color: String,
         head.posX += 1
         allSnakes[head] = color
         
-        //direction = SnakeDirection.EAST
-        direction = "east"
+        direction = SnakeDirection.EAST
     }
 
     fun moveForward() {
         moveTail()
 
         when(direction) {
-            //SnakeDirection.NORTH -> {
-            "north" -> {
+            SnakeDirection.NORTH -> {
                 head.posY -= 1
             }
-            //SnakeDirection.SOUTH -> {
-            "south" -> {
+            SnakeDirection.SOUTH -> {
                 head.posY += 1
             }
-            //SnakeDirection.EAST -> {
-            "east" -> {
+            SnakeDirection.EAST -> {
                 head.posX += 1
             }
-            //SnakeDirection.WEST -> {
-            "west" -> {
+            SnakeDirection.WEST -> {
                 head.posX -= 1
             }
         }
@@ -102,16 +88,16 @@ class Snake (private var color: String,
         var newPart = SnakePart(0, 0)
 
         when(direction) {
-            "north" -> {
+            SnakeDirection.NORTH -> {
                 newPart = SnakePart(parts[parts.size-1].posX, parts[parts.size-1].posY+1)
             }
-            "south" -> {
+            SnakeDirection.SOUTH -> {
                 newPart = SnakePart(parts[parts.size-1].posX, parts[parts.size-1].posY-1)
             }
-            "east" -> {
+            SnakeDirection.EAST -> {
                 newPart = SnakePart(parts[parts.size-1].posX-1, parts[parts.size-1].posY)
             }
-            "west" -> {
+            SnakeDirection.WEST -> {
                 newPart = SnakePart(parts[parts.size-1].posX+1, parts[parts.size-1].posY)
             }
         }
@@ -123,8 +109,7 @@ class Snake (private var color: String,
         var current: SnakePart
         var predecessor: SnakePart
 
-        allSnakes.remove(parts[parts.size-1])  // funktioniert eventuell nicht, wegen Suche nach Referenz
-        for(i in (parts.size-1)..1) {
+        for(i in parts.size-1 downTo 1) {
             current = parts[i]
             predecessor = parts[i-1]
             current.posX = predecessor.posX
