@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.engineio.client.transports.WebSocket
+import network.EventCodes.EventFromServer
+import network.EventCodes.EventToServer
 
 
 /**
@@ -22,7 +24,7 @@ object NetworkManager {
     var socket: Socket? = null
 
 
-    private var lobbyListener: ((String) -> Unit)? = null
+    var lobbyListener: ((String) -> Unit)? = null
     /**
      * Connects to the game server to send and receive messages
      */
@@ -42,7 +44,6 @@ object NetworkManager {
         socket?.on(Socket.EVENT_CONNECT_ERROR) {
             println("Could not connect to server")
 
-
             socket?.on(Socket.EVENT_DISCONNECT) {
                 println("Disconnected from server")
             }
@@ -60,33 +61,7 @@ object NetworkManager {
 
             socket?.on(EventFromServer.USER_JOINED_LOBBY.code) {
                 println("Received: Joined lobby")
-
             }
         }
-    }
-
-
-    // MARK: - Public functions
-    class FieldSize(val x: Int, val y: Int)
-    class CreateLobbyModel(val playerCount: Int, val size: FieldSize)
-
-    /**
-     * Creates a new lobby.
-     * @param model: Model that contains for how many players the lobby is and how big the field is
-     * @param callback: Get called when the lobby was created successfully with the lobby code
-     */
-    fun createLobby(model: CreateLobbyModel, callback: ((String) -> Unit)) {
-        socket?.emit(EventToServer.CREATE_LOBBY.code, Gson().toJson(model))
-        lobbyListener = {
-            callback(it)
-        }
-    }
-
-    fun joinLobby(code: String, callback: (String) -> Unit) {
-
-    }
-
-    fun sendUsername(name: String) {
-
     }
 }

@@ -27,8 +27,7 @@ class MenuView: Application() {
 
     var lobbyCodeLabel = Label()
 
-    override fun start(primaryStage: Stage)
-    {
+    override fun start(primaryStage: Stage) {
         // Styling of the view
         primaryStage.minWidth = 400.0
         primaryStage.minHeight = 300.0
