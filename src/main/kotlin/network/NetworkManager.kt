@@ -38,30 +38,35 @@ object NetworkManager {
         socket?.on(Socket.EVENT_CONNECT) {
             socket?.emit("client:test", "This is a Benni certified test message: LOL OLO")
         }
+
         socket?.on(Socket.EVENT_CONNECT_ERROR) {
             println("Could not connect to server")
-        }
-        socket?.on(Socket.EVENT_DISCONNECT) {
-            println("Disconnected from server")
-        }
 
-        socket?.on(EventFromServer.ERROR.code) { error ->
-            println("Received error message: $error")
-        }
 
-        socket?.on(EventFromServer.LOBBY_CREATED.code) {
-            val lobbyCode = it.first().toString()
-            println("Received: Lobby created with code $lobbyCode")
-            lobbyListener?.let { it1 -> it1(lobbyCode) }
-            socket?.emit(EventToServer.JOIN_LOBBY.code, lobbyCode)
-        }
-        socket?.on(EventFromServer.USER_JOINED_LOBBY.code) {
-            println("Received: Joined lobby")
-        }
+            socket?.on(Socket.EVENT_DISCONNECT) {
+                println("Disconnected from server")
+            }
 
+            socket?.on(EventFromServer.ERROR.code) { error ->
+                println("Received error message: $error")
+            }
+
+            socket?.on(EventFromServer.LOBBY_CREATED.code) {
+                val lobbyCode = it.first().toString()
+                println("Received: Lobby created with code $lobbyCode")
+                lobbyListener?.let { it1 -> it1(lobbyCode) }
+                socket?.emit(EventToServer.JOIN_LOBBY.code, lobbyCode)
+            }
+
+            socket?.on(EventFromServer.USER_JOINED_LOBBY.code) {
+                println("Received: Joined lobby")
+
+            }
+        }
     }
 
-    // MARK: - Lobby
+
+    // MARK: - Public functions
     class FieldSize(val x: Int, val y: Int)
     class CreateLobbyModel(val playerCount: Int, val size: FieldSize)
 
@@ -75,5 +80,13 @@ object NetworkManager {
         lobbyListener = {
             callback(it)
         }
+    }
+
+    fun joinLobby(code: String, callback: (String) -> Unit) {
+
+    }
+
+    fun sendUsername(name: String) {
+
     }
 }
