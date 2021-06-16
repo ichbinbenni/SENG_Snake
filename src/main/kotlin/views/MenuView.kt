@@ -13,9 +13,7 @@ import network.NetworkManager
 /**
  * Menu view that let the user decide if he/she/it wants to play singleplayer or multiplayer
  */
-class MenuView: Application()
-{
-
+class MenuView: Application() {
     var createLobbyButton = Button().apply {
         text = "Create Lobby"
         setOnAction {
@@ -23,15 +21,11 @@ class MenuView: Application()
                 Platform.runLater(Runnable {
                     lobbyCodeLabel.text = it
                 })
-
-
             }
         }
     }
 
     var lobbyCodeLabel = Label()
-
-
 
     override fun start(primaryStage: Stage)
     {

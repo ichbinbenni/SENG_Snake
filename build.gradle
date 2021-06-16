@@ -15,6 +15,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "io.socket:socket.io-client:2.0.1"
     implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'no.tornado:tornadofx:1.7.20'
 }
 javafx {
     modules("javafx.controls", "javafx.fxml")
