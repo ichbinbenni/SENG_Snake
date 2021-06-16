@@ -7,6 +7,9 @@ import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
+import network.Models.CreateLobbyModel
+import network.Models.FieldSize
+import network.NetworkGameBridge
 import network.NetworkManager
 
 
@@ -17,7 +20,7 @@ class MenuView: Application() {
     var createLobbyButton = Button().apply {
         text = "Create Lobby"
         setOnAction {
-            NetworkManager.createLobby(NetworkManager.CreateLobbyModel(3, NetworkManager.FieldSize(20, 20))) {
+            NetworkGameBridge.createLobby(CreateLobbyModel(3, FieldSize(20, 20))) {
                 Platform.runLater(Runnable {
                     lobbyCodeLabel.text = it
                 })
