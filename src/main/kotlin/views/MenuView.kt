@@ -1,49 +1,44 @@
 package views
-//
-import javafx.application.Application
-import javafx.application.Platform
-import javafx.scene.Scene
-import javafx.scene.control.Button
-import javafx.scene.control.Label
-import javafx.scene.layout.VBox
-import javafx.stage.Stage
-import network.Models.CreateLobbyModel
-import network.Models.FieldSize
-import network.NetworkGameBridge
-import network.NetworkManager
 
+import javafx.geometry.Insets
+import javafx.scene.Parent
+import javafx.scene.text.Font
+import tornadofx.*
+import views.controller.MenuController
 
-/**
- * Menu view that let the user decide if he/she/it wants to play singleplayer or multiplayer
- */
-class MenuView: Application() {
-    var createLobbyButton = Button().apply {
-        text = "Create Lobby"
-        setOnAction {
-            NetworkGameBridge.createLobby(CreateLobbyModel(3, FieldSize(20, 20))) {
-                Platform.runLater(Runnable {
-                    lobbyCodeLabel.text = it
-                })
+class MenuView : View("Menu") {
+
+    val controller: MenuController by inject()
+
+    override val root: Parent = vbox {
+        label {
+            text = "Snake"
+            padding = Insets(8.0)
+            font = Font.font(50.0)
+        }
+        label {
+            text = "Made by some guys"
+            padding = Insets(-8.0, 8.0,8.0,8.0)
+        }
+
+        rectangle {
+            height = 120.0
+            padding = Insets(8.0)
+        }
+
+        button {
+            text = "Create lobby"
+            action {
+                controller.createLobby()
             }
-        }
-    }
-
-    var lobbyCodeLabel = Label()
-
-    override fun start(primaryStage: Stage) {
-        // Styling of the view
-        primaryStage.minWidth = 400.0
-        primaryStage.minHeight = 300.0
-
-        var layout = VBox().apply {
-            children.add(Label("Hello, Snake!"))
-            children.add(createLobbyButton)
-            children.add(lobbyCodeLabel)
+            padding = Insets(8.0)
+            disableProperty().bind(!controller.isConnected)
         }
 
-        primaryStage.run {
-            scene = Scene(layout)
-            show()
+        label {
+            textProperty().bind(controller.isConnectedText)
+            font = Font.font(10.0)
+            padding = Insets(8.0)
         }
     }
 }

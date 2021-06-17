@@ -1,7 +1,5 @@
 package views;
 
-import gamelogic.SnakePart
-
 // TODO
 //class SnakeUI: Application {
 //    constructor(allSnakes: HashMap<SnakePart, String>) {

@@ -1,6 +1,5 @@
 package network
 
-import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.engineio.client.transports.WebSocket
@@ -22,10 +21,11 @@ object NetworkManager {
      * The current socket connection - if a current connection exists
      */
     var socket: Socket? = null
-
-
     var lobbyListener: ((String) -> Unit)? = null
+    var connectionStatusListener: ((Boolean) -> Unit)? = null
+
     /**
+     *
      * Connects to the game server to send and receive messages
      */
     fun connect() {
@@ -39,11 +39,12 @@ object NetworkManager {
 
         socket?.on(Socket.EVENT_CONNECT) {
             socket?.emit("client:test", "This is a Benni certified test message: LOL OLO")
+            connectionStatusListener?.let { it1 -> it1(true) }
         }
 
         socket?.on(Socket.EVENT_CONNECT_ERROR) {
             println("Could not connect to server")
-
+            connectionStatusListener?.let { it1 -> it1(false) }
             socket?.on(Socket.EVENT_DISCONNECT) {
                 println("Disconnected from server")
             }
