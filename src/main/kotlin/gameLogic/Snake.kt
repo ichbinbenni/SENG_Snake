@@ -1,4 +1,4 @@
-package gamelogic
+package gameLogic
 
 class Snake (private var color: String,
              startX: Int,

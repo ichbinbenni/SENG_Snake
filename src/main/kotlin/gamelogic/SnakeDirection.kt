@@ -1,4 +1,4 @@
-package gamelogic
+package gameLogic
 
 enum class SnakeDirection {
     NORTH,

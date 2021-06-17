@@ -1,11 +1,10 @@
 package network
 
-import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.engineio.client.transports.WebSocket
-import network.EventCodes.EventFromServer
-import network.EventCodes.EventToServer
+import network.eventCodes.EventFromServer
+import network.eventCodes.EventToServer
 
 
 /**

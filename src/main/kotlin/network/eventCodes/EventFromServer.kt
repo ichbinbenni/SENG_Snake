@@ -1,4 +1,4 @@
-package network.EventCodes
+package network.eventCodes
 
 /**
  * Event codes that can be triggered by the server or the client

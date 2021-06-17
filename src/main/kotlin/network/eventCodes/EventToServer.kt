@@ -1,4 +1,4 @@
-package network.EventCodes
+package network.eventCodes
 
 enum class EventToServer(val code: String) {
     CREATE_LOBBY("client:createLobby"),

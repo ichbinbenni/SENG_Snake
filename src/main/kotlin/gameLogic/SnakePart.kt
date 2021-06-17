@@ -1,3 +1,3 @@
-package gamelogic
+ package gameLogic
 
 class SnakePart(var posX: Int, var posY: Int)

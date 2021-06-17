@@ -7,10 +7,9 @@ import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
-import network.Models.CreateLobbyModel
-import network.Models.FieldSize
+import network.models.CreateLobbyModel
+import network.models.FieldSize
 import network.NetworkGameBridge
-import network.NetworkManager
 
 
 /**
