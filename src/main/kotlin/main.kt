@@ -1,6 +1,6 @@
-
-import javafx.application.Application.launch
 import network.NetworkManager
+import tornadofx.App
+import tornadofx.launch
 import views.MenuView
 
 /**
@@ -10,5 +10,7 @@ fun main(args: Array<String>) {
     // Connect to the server
     NetworkManager.connect()
     // Show the menu view
-    launch(MenuView::class.java)
+    launch<SnakeApp>(args)
 }
+
+class SnakeApp: App(MenuView::class)

@@ -1,4 +1,4 @@
-package network.models
+package network.Models
 
 enum class NetworkErrorCode(val code: Int, val description: String = "") {
     LOBBY_ALREADY_FULL(30001, "Could not join lobby. Lobby is full."),
