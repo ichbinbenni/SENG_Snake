@@ -9,6 +9,7 @@ import tornadofx.stringProperty
 
 class MenuController: Controller() {
 
+    var isConnected = booleanProperty(false)
     var isConnectedText= stringProperty("Connecting to server...")
 
     fun createLobby() {
@@ -18,6 +19,7 @@ class MenuController: Controller() {
     init {
         // Listen if client is connected to server
         NetworkManager.connectionStatusListener = {
+            isConnected.set(it)
             Platform.runLater {
                 if (it) {
                     isConnectedText.set("Connected to game server")

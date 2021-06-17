@@ -32,6 +32,7 @@ class MenuView : View("Menu") {
                 controller.createLobby()
             }
             padding = Insets(8.0)
+            disableProperty().bind(!controller.isConnected)
         }
 
         label {
