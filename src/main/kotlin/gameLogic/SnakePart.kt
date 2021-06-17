@@ -1,4 +1,4 @@
- package gameLogic
+package gamelogic
 
 /**
  * Class to manage coordinates of every SnakePart

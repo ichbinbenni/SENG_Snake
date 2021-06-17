@@ -1,4 +1,4 @@
-package gameLogic
+package gamelogic
 
 /**
  * Class to control Snake and add SnakeParts

@@ -1,4 +1,4 @@
-package gameLogic
+package gamelogic
 
 /**
  * Enum to manage the directions of the Snake
