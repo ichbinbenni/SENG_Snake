@@ -14,4 +14,4 @@ fun main(args: Array<String>) {
     launch<SnakeApp>(args)
 }
 
-class SnakeApp: App(SnakeUI::class)
+class SnakeApp: App(MenuView::class)

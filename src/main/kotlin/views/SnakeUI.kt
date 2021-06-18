@@ -1,14 +1,9 @@
 package views;
 
-import javafx.scene.layout.GridPane
-import javafx.scene.layout.Pane
 import javafx.scene.paint.Paint
-import javafx.scene.shape.Circle
 import javafx.scene.shape.Rectangle
 import tornadofx.View
 import tornadofx.pane
-import tornadofx.row
-import tornadofx.vbox
 
 class SnakeUI : View("Snake-Multiplayer") {
 
@@ -21,7 +16,7 @@ class SnakeUI : View("Snake-Multiplayer") {
         for (i in 0..10) {
             var array = arrayOf<Rectangle>()
             for (j in 0..10) {
-                var rect = Rectangle(i*20.0, j*20.0, 20.0, 20.0);
+                var rect = Rectangle(i * 20.0, j * 20.0, 20.0, 20.0);
                 array += rect
                 root.add(rect)
             }
@@ -37,6 +32,4 @@ class SnakeUI : View("Snake-Multiplayer") {
         grid[7][4].fill = Paint.valueOf("#00FF00");
         grid[7][5].fill = Paint.valueOf("#00FF00");
     }
-
-
 }

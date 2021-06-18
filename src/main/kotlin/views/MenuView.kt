@@ -27,6 +27,14 @@ class MenuView : View("Menu") {
         }
 
         button {
+            text = "TEST_SNAKE_UI"
+            action {
+                replaceWith<SnakeUI>()
+            }
+            padding = Insets(8.0)
+        }
+
+        button {
             text = "Create lobby"
             action {
                 controller.createLobby()
@@ -40,5 +48,8 @@ class MenuView : View("Menu") {
             font = Font.font(10.0)
             padding = Insets(8.0)
         }
+
+        minWidth = 300.0
+        minHeight = 300.0
     }
 }
