@@ -1,14 +1,14 @@
-package network
+package snake.network
 
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.engineio.client.transports.WebSocket
-import network.EventCodes.EventFromServer
-import network.EventCodes.EventToServer
+import snake.network.EventCodes.EventFromServer
+import snake.network.EventCodes.EventToServer
 
 
 /**
- * Class that manage the network connection to the server
+ * Class that manage the snake.network connection to the server
  */
 object NetworkManager {
 

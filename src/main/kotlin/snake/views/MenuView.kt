@@ -1,10 +1,10 @@
-package views
+package snake.views
 
 import javafx.geometry.Insets
 import javafx.scene.Parent
 import javafx.scene.text.Font
 import tornadofx.*
-import views.controller.MenuController
+import snake.views.controller.MenuController
 
 class MenuView : View("Menu") {
 

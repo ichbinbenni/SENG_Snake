@@ -1,8 +1,7 @@
-package views.controller
+package snake.views.controller
 
 import javafx.application.Platform
-import javafx.beans.property.BooleanProperty
-import network.NetworkManager
+import snake.network.NetworkManager
 import tornadofx.Controller
 import tornadofx.booleanProperty
 import tornadofx.stringProperty

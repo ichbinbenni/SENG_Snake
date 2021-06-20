@@ -3,11 +3,11 @@ package gamelogic
 /**
  * Class to control Snake and add SnakeParts
  */
-class Snake (private var color: String,
+class Snake (var color: String,
              startX: Int,
              startY: Int,
              private var direction: SnakeDirection,
-             private var allSnakes: HashMap<SnakePart, String>) {
+             var allSnakes: HashMap<SnakePart, String>) {
 
     var head: SnakePart = SnakePart(startX, startY)  // Head of Snake gets shifted 3 Blocks depending on starting direction
     private var parts = arrayListOf(this.head)

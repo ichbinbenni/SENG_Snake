@@ -1,9 +1,9 @@
-package network
+package snake.network
 
 import com.google.gson.Gson
-import network.EventCodes.EventToServer
-import network.Models.CreateLobbyModel
-import network.Models.NetworkErrorCode
+import snake.network.EventCodes.EventToServer
+import snake.network.Models.CreateLobbyModel
+import snake.network.Models.NetworkErrorCode
 
 object NetworkGameBridge {
 

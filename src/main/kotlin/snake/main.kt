@@ -1,8 +1,10 @@
-import network.NetworkManager
+package snake
+
+import snake.network.NetworkManager
+import snake.views.MenuView
 import tornadofx.App
 import tornadofx.launch
-import views.MenuView
-import views.SnakeUI
+import snake.views.SnakeUI
 
 /**
  * Main. First function that get called
