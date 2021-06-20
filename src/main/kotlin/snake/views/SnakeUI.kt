@@ -42,6 +42,12 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
             }
         }
 
+        /**
+         * Draws the start Snakes
+         * with their start Position and
+         * start Color
+         *
+         */
 
         SnakeGame.snakes.forEach {
             it.allSnakes.forEach { part, color ->

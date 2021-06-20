@@ -54,11 +54,7 @@ object SnakeGame {
         }
     }
 
-    /**
-     *
-     *
-     *
-     */
+
 
     private fun notifyGameState() {
         gameStateListeners.forEach {
