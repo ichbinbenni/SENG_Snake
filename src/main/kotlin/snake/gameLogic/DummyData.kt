@@ -118,10 +118,10 @@ object DummyData {
                         positionsSnakeA[5][2].posY
                     ),
                     positionsSnakeA[5].subList(0, 2),
-                    false
+                    true
                 )
             ),
-            true
+            false
         )
     )
 }
