@@ -63,7 +63,7 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
          */
         gameState.snakes.forEach {
             println("SnakeUI.onGameStateChanged: Drawing head at position x${it.snakeHead.posX} y${it.snakeHead.posY}")
-            grid[it.snakeHead.posX][it.snakeHead.posX].fill = Paint.valueOf(it.color)
+            grid[it.snakeHead.posX][it.snakeHead.posY].fill = Paint.valueOf(it.color)
 
             it.snakeParts.forEach { part ->
                 println("SnakeUI.onGameStateChanged: Drawing part at position x${part.posX} y${part.posY}")
