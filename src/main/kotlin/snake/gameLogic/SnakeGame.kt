@@ -2,7 +2,6 @@ package snake.gameLogic
 
 import gamelogic.Snake
 import gamelogic.SnakeDirection
-import javafx.scene.paint.Paint
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
