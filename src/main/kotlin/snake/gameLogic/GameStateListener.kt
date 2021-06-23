@@ -7,5 +7,5 @@ package snake.gameLogic
  */
 
 interface GameStateListener {
-    fun onGameStateChanged()
+    fun onGameStateChanged(gameState: GameState)
 }
