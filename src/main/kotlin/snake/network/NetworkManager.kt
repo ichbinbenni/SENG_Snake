@@ -1,8 +1,11 @@
 package snake.network
 
+import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.engineio.client.transports.WebSocket
+import snake.gameLogic.Game
+import snake.gameLogic.GameState
 import snake.network.EventCodes.EventFromServer
 import snake.network.EventCodes.EventToServer
 
@@ -62,6 +65,13 @@ object NetworkManager {
 
             socket?.on(EventFromServer.USER_JOINED_LOBBY.code) {
                 println("Received: Joined lobby")
+            }
+
+            socket?.on(EventFromServer.GAME_STATE.code) {
+                it.firstOrNull()?.let {
+                    val gameState = Gson().fromJson(it.toString(), GameState::class.java)
+                    Game.add(gameState)
+                }
             }
         }
     }

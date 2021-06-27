@@ -6,5 +6,6 @@ package snake.network.EventCodes
 enum class EventFromServer(val code: String) {
     ERROR("application_error"),
     USER_JOINED_LOBBY("lobby:joined"),
-    LOBBY_CREATED("server:lobbyCreated")
+    LOBBY_CREATED("server:lobbyCreated"),
+    GAME_STATE("server:gameState")
 }

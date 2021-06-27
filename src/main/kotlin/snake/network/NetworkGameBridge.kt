@@ -29,14 +29,4 @@ object NetworkGameBridge {
         // TODO: Needs to be implemented, currently just a test callback
         callback("", NetworkErrorCode.LOBBY_ALREADY_FULL)
     }
-
-    // MARK: - Game logic
-
-    /**
-     * Register a method that should get called when the UI needs to be updated
-     * (So the server sends information about the next step)
-     */
-    fun registerUpdateUIMethod(callback: (String) -> Unit) {
-        // TODO: Needs to be implemented
-    }
 }

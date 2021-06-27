@@ -10,4 +10,4 @@ class Snake (
     val color: String,
     val snakeHead: SnakeHead,
     val snakeParts: List<SnakePart>,
-    playerLost: Boolean)
+    val playerLost: Boolean)
