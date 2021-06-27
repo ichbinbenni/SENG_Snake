@@ -1,6 +1,9 @@
 package snake.views;
 
+import gamelogic.SnakeDirection
 import javafx.scene.Node
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyEvent
 import javafx.scene.paint.Color
 import snake.gameLogic.GameStateListener
 import javafx.scene.paint.Paint
@@ -8,6 +11,7 @@ import javafx.scene.shape.Circle
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
 import snake.gameLogic.Game
+import snake.gameLogic.Game.changePlayerDirection
 import snake.gameLogic.GameState
 import tornadofx.View
 import tornadofx.colorpicker
@@ -25,6 +29,15 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
 
     // MARK: - UI-Elements
     override val root = pane {
+        addEventFilter(KeyEvent.KEY_PRESSED) { event ->
+            println("pressed: " + event.code)
+            when(event.code) {
+                KeyCode.UP, KeyCode.W -> changePlayerDirection("DUMMY NAME HELLO?????", SnakeDirection.NORTH)
+                KeyCode.DOWN, KeyCode.S -> changePlayerDirection("DUMMY NAME HELLO?????", SnakeDirection.SOUTH)
+                KeyCode.LEFT, KeyCode.A -> changePlayerDirection("DUMMY NAME HELLO?????", SnakeDirection.WEST)
+                KeyCode.RIGHT, KeyCode.D -> changePlayerDirection("DUMMY NAME HELLO?????", SnakeDirection.EAST)
+            }
+        }
     }
 
 
@@ -45,6 +58,10 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
 
         Game.gameStateListener = this
         Game.DEBUG_startGame()
+    }
+
+    override fun onDock() {
+        root.requestFocus()
     }
 
 
@@ -70,5 +87,10 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
                 grid[part.posX][part.posY].fill = Paint.valueOf(it.color)
             }
         }
+
     }
+
+
+
+
 }

@@ -1,8 +1,9 @@
 package snake.gameLogic
 
+import gamelogic.SnakeDirection
 import java.util.*
 
-object Game {
+object Game : GameStateHandler {
     var gameStateListener: GameStateListener? = null
     var gameStates = arrayListOf<GameState>()
 
@@ -35,9 +36,17 @@ object Game {
                     }
                     runTimer()
                 }
-            }, 3000)
+            }, 1000)
         }
         runTimer()
 
+    }
+
+    override fun changePlayerDirection(playerName: String, direction: SnakeDirection) {
+        // TODO("Not yet implemented")
+        /**
+         * Server/Client work
+         */
+        println("Changing $playerName direction to $direction")
     }
 }
