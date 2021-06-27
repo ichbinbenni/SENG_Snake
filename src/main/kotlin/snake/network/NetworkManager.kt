@@ -18,7 +18,7 @@ object NetworkManager {
     /**
      * The url of the game server
      */
-    private val SERVER_URL = "http://niklaseckert.ddns.net:3000"
+    private val SERVER_URL = "http://95.88.132.181:3000"
 
     /**
      * The current socket connection - if a current connection exists
@@ -68,6 +68,7 @@ object NetworkManager {
             }
 
             socket?.on(EventFromServer.GAME_STATE.code) {
+                println("Received: Game state")
                 it.firstOrNull()?.let {
                     val gameState = Gson().fromJson(it.toString(), GameState::class.java)
                     Game.add(gameState)

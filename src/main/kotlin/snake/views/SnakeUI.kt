@@ -89,8 +89,4 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
         }
 
     }
-
-
-
-
 }
