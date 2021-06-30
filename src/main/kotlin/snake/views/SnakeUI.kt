@@ -84,13 +84,12 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
          */
         gameState.snakes.forEach {
             println("SnakeUI.onGameStateChanged: Drawing head at position x${it.snakeHead.posX} y${it.snakeHead.posY} color:${it.snakeColor}")
-            grid[it.snakeHead.posX][it.snakeHead.posY].fill = Paint.valueOf("#14d342")//(it.snakeColor) TODO: Farbe wieder einsetzen, aber aktuell sendet der Server einen fehlerhaften String
+            grid[it.snakeHead.posX][it.snakeHead.posY].fill = Paint.valueOf(it.snakeColor)
 
             it.snakeParts.forEach { part ->
 //                println("SnakeUI.onGameStateChanged: Drawing part at position x${part.posX} y${part.posY}")
-                grid[part.posX][part.posY].fill = Paint.valueOf("#14d342")//(it.snakeColor) TODO: Farbe wieder einsetzen, aber aktuell sendet der Server einen fehlerhaften String
+                grid[part.posX][part.posY].fill = Paint.valueOf(it.snakeColor)
             }
         }
-
     }
 }

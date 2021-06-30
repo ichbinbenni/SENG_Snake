@@ -46,6 +46,7 @@ object NetworkGameBridge {
 
     /**
      * Changes the direction if the snake
+     * @param direction: The direction the snake should go next
      */
     fun changeDirection(direction: SnakeDirection) {
         NetworkManager.socket?.emit(EventToServer.CHANGE_DIRECTION.code, direction.code)

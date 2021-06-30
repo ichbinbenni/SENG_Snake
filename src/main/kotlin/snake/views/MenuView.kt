@@ -41,7 +41,7 @@ class MenuView : View("Menu") {
             height = 120.0
             padding = Insets(8.0)
         }
-        
+
         button {
             text = "Join Lobby"
             action {

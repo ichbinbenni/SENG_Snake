@@ -19,7 +19,7 @@ object NetworkManager {
     /**
      * The url of the game server
      */
-    private val SERVER_URL = "http://niklaseckert.ddns.net:3001"
+    private val SERVER_URL = "http://niklaseckert.ddns.net:3000"
 
     /**
      * The current socket connection - if a current connection exists
