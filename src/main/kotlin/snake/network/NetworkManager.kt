@@ -8,6 +8,7 @@ import snake.gameLogic.Game
 import snake.gameLogic.GameState
 import snake.network.EventCodes.EventFromServer
 import snake.network.EventCodes.EventToServer
+import java.lang.Exception
 
 
 /**
@@ -18,15 +19,14 @@ object NetworkManager {
     /**
      * The url of the game server
      */
-    private val SERVER_URL = "http://95.88.132.181:3000"
+    private val SERVER_URL = "http://niklaseckert.ddns.net:3001"
 
     /**
      * The current socket connection - if a current connection exists
      */
     var socket: Socket? = null
-    var lobbyListener: ((String) -> Unit)? = null
+    var isConnected: Boolean = false
     var connectionStatusListener: ((Boolean) -> Unit)? = null
-
 
     /**
      *
@@ -42,35 +42,38 @@ object NetworkManager {
         socket?.connect()
 
         socket?.on(Socket.EVENT_CONNECT) {
+            println("NetworkManager.connect: Connected")
             socket?.emit("client:test", "This is a Benni certified test message: LOL OLO")
+            isConnected = true
             connectionStatusListener?.let { it1 -> it1(true) }
         }
 
         socket?.on(Socket.EVENT_CONNECT_ERROR) {
-            println("Could not connect to server")
+            println("NetworkManager.connect: Error connecting")
+            println("$it")
+            isConnected = false
             connectionStatusListener?.let { it1 -> it1(false) }
         }
 
         socket?.on(Socket.EVENT_DISCONNECT) {
-            println("Disconnected from server")
+            println("NetworkManager.connect: Disconnect")
         }
 
         socket?.on(EventFromServer.ERROR.code) { error ->
             println("Received error message: $error")
         }
 
-        socket?.on(EventFromServer.LOBBY_CREATED.code) {
-            val lobbyCode = it.first().toString()
-            println("Received: Lobby created with code $lobbyCode")
-            lobbyListener?.let { it1 -> it1(lobbyCode) }
-            socket?.emit(EventToServer.JOIN_LOBBY.code, lobbyCode)
-        }
-
         socket?.on(EventFromServer.GAME_STATE.code) {
-            println("Received: Game state")
-            it.firstOrNull()?.let {
-                val gameState = Gson().fromJson(it.toString(), GameState::class.java)
-                Game.add(gameState)
+            println("NetworkManager.connect: Received game state")
+            println(it.first().toString())
+            it.firstOrNull()?.let { jsonString ->
+                try {
+                    val gameState = Gson().fromJson(jsonString.toString(), GameState::class.java)
+                    println("NetworkManager.connect: Adding game state")
+                    Game.add(gameState)
+                } catch(e: Exception) {
+                    println("Could not parse model: ${e.localizedMessage}")
+                }
             }
         }
     }

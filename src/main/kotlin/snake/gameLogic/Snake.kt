@@ -7,7 +7,7 @@ import snake.gameLogic.SnakeHead
  */
 class Snake (
     val snakeID: String,
-    val color: String,
+    val snakeColor: String,
     val snakeHead: SnakeHead,
     val snakeParts: List<SnakePart>,
     val playerLost: Boolean)

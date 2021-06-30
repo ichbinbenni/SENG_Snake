@@ -3,5 +3,6 @@ package snake.gameLogic
 import gamelogic.SnakeDirection
 import gamelogic.SnakePart
 
-class SnakeHead(val direction: SnakeDirection, posX: Int, posY: Int): SnakePart(posX, posY) {
+class SnakeHead(private val direction: Int, posX: Int, posY: Int): SnakePart(posX, posY) {
+    var directionEnum: SnakeDirection = SnakeDirection.values().firstOrNull { it.code == direction } ?: SnakeDirection.NORTH
 }

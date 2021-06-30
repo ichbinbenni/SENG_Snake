@@ -12,15 +12,20 @@ object NetworkGameBridge {
     // MARK: - MENU
 
     /**
-     * Creates a new lobby.
+     * Creates a new lobby and joins it automatically when receiving the code
      * @param model: Model that contains for how many players the lobby is and how big the field is
-     * @param callback: Get called when the lobby was created successfully with the lobby code
+     * @param callback: Get called when the lobby was created successfully and you joined it
      */
-    fun createLobby(model: CreateLobbyModel, callback: ((String) -> Unit)) {
-        NetworkManager.socket?.emit(EventToServer.CREATE_LOBBY.code, Gson().toJson(model))
-        NetworkManager.lobbyListener = {
-            callback(it)
+    fun createLobby(model: CreateLobbyModel, callback: ((NetworkErrorCode?) -> Unit)) {
+        NetworkManager.socket?.on(EventFromServer.LOBBY_CREATED.code) {
+            val lobbyCode = it.first().toString()
+            println("NetworkGameBridge.createLobby: Lobby created with code $lobbyCode")
+            NetworkManager.socket?.on(EventFromServer.USER_JOINED_LOBBY.code) { joinLobbyPayload ->
+                callback(NetworkErrorCode.fromCode(joinLobbyPayload.firstOrNull()?.toString()?.toInt() ?: -1))
+            }
+            NetworkManager.socket?.emit(EventToServer.JOIN_LOBBY.code, lobbyCode)
         }
+        NetworkManager.socket?.emit(EventToServer.CREATE_LOBBY.code, Gson().toJson(model))
     }
 
     /**
@@ -31,6 +36,7 @@ object NetworkGameBridge {
     fun joinLobby(model: JoinLobbyModel, callback: (NetworkErrorCode?) -> Unit) {
 
         NetworkManager.socket?.on(EventFromServer.USER_JOINED_LOBBY.code) {
+            println("NetworkGameBridge.joibLobby: Received join event")
             callback(NetworkErrorCode.fromCode(it.firstOrNull()?.toString()?.toInt() ?: -1))
         }
 

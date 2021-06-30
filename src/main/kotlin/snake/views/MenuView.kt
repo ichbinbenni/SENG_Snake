@@ -7,8 +7,14 @@ import tornadofx.*
 import snake.views.controller.MenuController
 
 class MenuView : View("Menu") {
+    companion object {
+        var current: MenuView? = null
+    }
+    private val controller: MenuController by inject()
 
-    val controller: MenuController by inject()
+    init {
+        current = this
+    }
 
     override val root: Parent = vbox {
         label {
@@ -19,6 +25,15 @@ class MenuView : View("Menu") {
         label {
             text = "Made by some guys"
             padding = Insets(-8.0, 8.0,8.0,8.0)
+        }
+        textfield {
+            promptText = "Lobby code"
+            textProperty().bindBidirectional(controller.lobbyCodeProperty)
+        }
+
+        textfield {
+            promptText = "Player name"
+            textProperty().bindBidirectional(controller.playerNameProperty)
         }
 
         rectangle {
@@ -34,6 +49,14 @@ class MenuView : View("Menu") {
             padding = Insets(8.0)
         }
 
+
+        button {
+            text = "Join Lobby"
+            action {
+                controller.joinLobby()
+            }
+            disableProperty().bind(!controller.isConnected)
+        }
         button {
             text = "Create lobby"
             action {

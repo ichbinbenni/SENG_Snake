@@ -43,7 +43,7 @@ object DummyData {
             listOf(
                 Snake(
                     "id1", "#0000ff", SnakeHead(
-                        SnakeDirection.SOUTH,
+                        1,
                         positionsSnakeA[0][2].posX,
                         positionsSnakeA[0][2].posY
                     ),
@@ -57,7 +57,7 @@ object DummyData {
             listOf(
                 Snake(
                     "id1", "#0000ff", SnakeHead(
-                        SnakeDirection.SOUTH,
+                        1,
                         positionsSnakeA[1][2].posX,
                         positionsSnakeA[1][2].posY
                     ),
@@ -71,7 +71,7 @@ object DummyData {
             listOf(
                 Snake(
                     "id1", "#0000ff", SnakeHead(
-                        SnakeDirection.EAST,
+                        2,
                         positionsSnakeA[2][2].posX,
                         positionsSnakeA[2][2].posY
                     ),
@@ -85,7 +85,7 @@ object DummyData {
             listOf(
                 Snake(
                     "id1", "#0000ff", SnakeHead(
-                        SnakeDirection.EAST,
+                        2,
                         positionsSnakeA[3][2].posX,
                         positionsSnakeA[3][2].posY
                     ),
@@ -99,7 +99,7 @@ object DummyData {
             listOf(
                 Snake(
                     "id1", "#0000ff", SnakeHead(
-                        SnakeDirection.EAST,
+                        2,
                         positionsSnakeA[4][2].posX,
                         positionsSnakeA[4][2].posY
                     ),
@@ -113,7 +113,7 @@ object DummyData {
             listOf(
                 Snake(
                     "id1", "#0000ff", SnakeHead(
-                        SnakeDirection.EAST,
+                        2,
                         positionsSnakeA[5][2].posX,
                         positionsSnakeA[5][2].posY
                     ),
