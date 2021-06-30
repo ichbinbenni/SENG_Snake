@@ -1,6 +1,7 @@
 package snake.gameLogic
 
 import gamelogic.SnakeDirection
+import snake.network.NetworkGameBridge
 import java.util.*
 
 object Game: GameStateHandler {
@@ -44,10 +45,6 @@ object Game: GameStateHandler {
     }
 
     override fun changePlayerDirection(playerName: String, direction: SnakeDirection) {
-        // TODO("Not yet implemented")
-        /**
-         * Server/Client work
-         */
-        println("Changing $playerName direction to $direction")
+        NetworkGameBridge.changeDirection(direction)
     }
 }

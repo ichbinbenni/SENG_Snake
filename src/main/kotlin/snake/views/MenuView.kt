@@ -41,16 +41,7 @@ class MenuView : View("Menu") {
             height = 120.0
             padding = Insets(8.0)
         }
-
-        button {
-            text = "TEST_SNAKE_UI"
-            action {
-                replaceWith<SnakeUI>()
-            }
-            padding = Insets(8.0)
-        }
-
-
+        
         button {
             text = "Join Lobby"
             action {

@@ -50,7 +50,7 @@ object NetworkManager {
 
         socket?.on(Socket.EVENT_CONNECT_ERROR) {
             println("NetworkManager.connect: Error connecting")
-            println("$it")
+            println("${it.first().toString()}")
             isConnected = false
             connectionStatusListener?.let { it1 -> it1(false) }
         }

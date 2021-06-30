@@ -1,6 +1,7 @@
 package snake.network
 
 import com.google.gson.Gson
+import gamelogic.SnakeDirection
 import snake.network.EventCodes.EventFromServer
 import snake.network.EventCodes.EventToServer
 import snake.network.Models.CreateLobbyModel
@@ -41,5 +42,12 @@ object NetworkGameBridge {
         }
 
         NetworkManager.socket?.emit(EventToServer.JOIN_LOBBY.code, Gson().toJson(model))
+    }
+
+    /**
+     * Changes the direction if the snake
+     */
+    fun changeDirection(direction: SnakeDirection) {
+        NetworkManager.socket?.emit(EventToServer.CHANGE_DIRECTION.code, direction.code)
     }
 }
