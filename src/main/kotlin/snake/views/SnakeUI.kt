@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
 import snake.gameLogic.Game
 import snake.gameLogic.Game.changePlayerDirection
+import snake.gameLogic.Game.gameStates
 import snake.gameLogic.GameState
 import tornadofx.View
 import tornadofx.colorpicker
@@ -32,10 +33,10 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
         addEventFilter(KeyEvent.KEY_PRESSED) { event ->
             println("pressed: " + event.code)
             when(event.code) {
-                KeyCode.UP, KeyCode.W -> changePlayerDirection("DUMMY NAME HELLO?????", SnakeDirection.NORTH)
-                KeyCode.DOWN, KeyCode.S -> changePlayerDirection("DUMMY NAME HELLO?????", SnakeDirection.SOUTH)
-                KeyCode.LEFT, KeyCode.A -> changePlayerDirection("DUMMY NAME HELLO?????", SnakeDirection.WEST)
-                KeyCode.RIGHT, KeyCode.D -> changePlayerDirection("DUMMY NAME HELLO?????", SnakeDirection.EAST)
+                KeyCode.UP, KeyCode.W -> changePlayerDirection(Game.playerName, SnakeDirection.NORTH)
+                KeyCode.DOWN, KeyCode.S -> changePlayerDirection(Game.playerName, SnakeDirection.SOUTH)
+                KeyCode.LEFT, KeyCode.A -> changePlayerDirection(Game.playerName, SnakeDirection.WEST)
+                KeyCode.RIGHT, KeyCode.D -> changePlayerDirection(Game.playerName, SnakeDirection.EAST)
             }
         }
     }
@@ -71,7 +72,7 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
 
     override fun onGameStateChanged(gameState: GameState) {
         println("SnakeUI.onGameStateChanged: Drawing field for new state")
-        // update UI
+        // Clear board  (draw all cells white)
         for (i in 0..BOARD_SIZE) {
             for (j in 0..BOARD_SIZE) {
                 grid[i][j].fill = Paint.valueOf("#FFFFFF")
@@ -80,15 +81,14 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
 
         /**
          * Draws all snakes in their colors
-         *
          */
         gameState.snakes.forEach {
             println("SnakeUI.onGameStateChanged: Drawing head at position x${it.snakeHead.posX} y${it.snakeHead.posY} color:${it.snakeColor}")
-            grid[it.snakeHead.posX][it.snakeHead.posY].fill = Paint.valueOf(it.snakeColor)
+            grid[it.snakeHead.posX][it.snakeHead.posY].fill = Paint.valueOf("#14d342")//(it.snakeColor) TODO: Farbe wieder einsetzen, aber aktuell sendet der Server einen fehlerhaften String
 
             it.snakeParts.forEach { part ->
 //                println("SnakeUI.onGameStateChanged: Drawing part at position x${part.posX} y${part.posY}")
-                grid[part.posX][part.posY].fill = Paint.valueOf(it.snakeColor)
+                grid[part.posX][part.posY].fill = Paint.valueOf("#14d342")//(it.snakeColor) TODO: Farbe wieder einsetzen, aber aktuell sendet der Server einen fehlerhaften String
             }
         }
 

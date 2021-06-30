@@ -3,9 +3,10 @@ package snake.gameLogic
 import gamelogic.SnakeDirection
 import java.util.*
 
-object Game : GameStateHandler {
+object Game: GameStateHandler {
     var gameStateListener: GameStateListener? = null
     var gameStates = arrayListOf<GameState>()
+    var playerName: String = "Need to be set"
 
 
     /**

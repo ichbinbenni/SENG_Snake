@@ -1,6 +1,7 @@
 package snake.views.controller
 
 import javafx.application.Platform
+import snake.gameLogic.Game
 import snake.network.Models.CreateLobbyModel
 import snake.network.Models.FieldSize
 import snake.network.Models.JoinLobbyModel
@@ -25,29 +26,40 @@ class MenuController: Controller() {
         NetworkGameBridge.createLobby(CreateLobbyModel(1, FieldSize(30,30)), callback = {
             println("MenuView.createLobby: Created")
             Platform.runLater {
+                Game.playerName = playerNameProperty.value
+                // TODO: Show lobby waiting screen?
                 MenuView.current?.replaceWith<SnakeUI>()
             }
         })
     }
 
+    /**
+     * Joins a lobby
+     */
     fun joinLobby() {
         println("MenuView.joinLobby: Joining ${lobbyCodeProperty.value} with name ${playerNameProperty.value}...")
         NetworkGameBridge.joinLobby(JoinLobbyModel(playerNameProperty.value, lobbyCodeProperty.value), callback = {
             println("MenuView.joinLobby: Joined")
             Platform.runLater {
+                // TODO: Show lobby waiting screen?
+                Game.playerName = playerNameProperty.value
                 MenuView.current?.replaceWith<SnakeUI>()
             }
         })
     }
 
     init {
-        // Listen if client is connected to server
+        // Set initial connection status - client can already be connected
         setConnectedStatus()
+        // Listen if client is connected to server
         NetworkManager.connectionStatusListener = {
             setConnectedStatus()
         }
     }
 
+    /**
+     * Sets the current connection status. This will enable/disable buttons and sets the text so the user knows if he/shw/it is connected
+     */
     private fun setConnectedStatus() {
         isConnected.set(NetworkManager.isConnected)
         Platform.runLater {

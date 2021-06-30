@@ -16,6 +16,7 @@ class MenuView : View("Menu") {
         current = this
     }
 
+    //TODO: Layout
     override val root: Parent = vbox {
         label {
             text = "Snake"
