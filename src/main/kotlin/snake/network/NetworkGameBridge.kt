@@ -1,8 +1,10 @@
 package snake.network
 
 import com.google.gson.Gson
+import snake.network.EventCodes.EventFromServer
 import snake.network.EventCodes.EventToServer
 import snake.network.Models.CreateLobbyModel
+import snake.network.Models.JoinLobbyModel
 import snake.network.Models.NetworkErrorCode
 
 object NetworkGameBridge {
@@ -23,10 +25,15 @@ object NetworkGameBridge {
 
     /**
      * Joins the lobby
-     * @param callback: Get called when the join was successfully with the lobby code. Will contain lobby information or an error why you could not join
+     * @param model: Information about the lobby you want to join. LobbyCode and your name.
+     * @param callback: Get called when the server answers. If error code is null joining was successfull
      */
-    fun joinLobby(code: String, callback: (String, NetworkErrorCode?) -> Unit) {
-        // TODO: Needs to be implemented, currently just a test callback
-        callback("", NetworkErrorCode.LOBBY_ALREADY_FULL)
+    fun joinLobby(model: JoinLobbyModel, callback: (NetworkErrorCode?) -> Unit) {
+
+        NetworkManager.socket?.on(EventFromServer.USER_JOINED_LOBBY.code) {
+            callback(NetworkErrorCode.fromCode(it.firstOrNull()?.toString()?.toInt() ?: -1))
+        }
+
+        NetworkManager.socket?.emit(EventToServer.JOIN_LOBBY.code, Gson().toJson(model))
     }
 }
