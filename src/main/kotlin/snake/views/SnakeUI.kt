@@ -69,6 +69,14 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
         root.requestFocus()
     }
 
+    //Still to do
+    fun gameEnded(gameState: GameState){
+        gameState.snakes.forEach {
+            if(it.playerLost){
+            }
+        }
+    }
+
 
     override fun onGameStateChanged(gameState: GameState) {
         println("SnakeUI.onGameStateChanged: Drawing field for new state")

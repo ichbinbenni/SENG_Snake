@@ -27,15 +27,7 @@ class MenuView : View("Menu") {
             text = "Made by some guys"
             padding = Insets(-8.0, 8.0,8.0,8.0)
         }
-        textfield {
-            promptText = "Lobby code"
-            textProperty().bindBidirectional(controller.lobbyCodeProperty)
-        }
 
-        textfield {
-            promptText = "Player name"
-            textProperty().bindBidirectional(controller.playerNameProperty)
-        }
 
         rectangle {
             height = 120.0
@@ -45,17 +37,17 @@ class MenuView : View("Menu") {
         button {
             text = "Join Lobby"
             action {
-                controller.joinLobby()
+                MenuView.current?.replaceWith<JoinLobbyView>()
             }
             disableProperty().bind(!controller.isConnected)
         }
         button {
             text = "Create lobby"
             action {
-                controller.createLobby()
+                MenuView.current?.replaceWith<CreateLobbyView>()
             }
             padding = Insets(8.0)
-            disableProperty().bind(!controller.isConnected)
+            //disableProperty().bind(!controller.isConnected)
         }
 
         label {

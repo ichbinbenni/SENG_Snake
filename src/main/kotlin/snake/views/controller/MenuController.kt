@@ -17,36 +17,12 @@ class MenuController: Controller() {
 
     var isConnected = booleanProperty(false)
     var isConnectedText= stringProperty("Connecting to server...")
-    var lobbyCodeProperty = stringProperty("")
-    var playerNameProperty = stringProperty("")
 
-    fun createLobby() {
-        println("MenuView.joinLobby: Creating...")
-        // TODO: Make playerCount and field size editable by the user
-        NetworkGameBridge.createLobby(CreateLobbyModel(1, FieldSize(30,30)), callback = {
-            println("MenuView.createLobby: Created")
-            Platform.runLater {
-                Game.playerName = playerNameProperty.value
-                // TODO: Show lobby waiting screen?
-                MenuView.current?.replaceWith<SnakeUI>()
-            }
-        })
-    }
 
-    /**
-     * Joins a lobby
-     */
-    fun joinLobby() {
-        println("MenuView.joinLobby: Joining ${lobbyCodeProperty.value} with name ${playerNameProperty.value}...")
-        NetworkGameBridge.joinLobby(JoinLobbyModel(playerNameProperty.value, lobbyCodeProperty.value), callback = {
-            println("MenuView.joinLobby: Joined")
-            Platform.runLater {
-                // TODO: Show lobby waiting screen?
-                Game.playerName = playerNameProperty.value
-                MenuView.current?.replaceWith<SnakeUI>()
-            }
-        })
-    }
+
+
+
+
 
     init {
         // Set initial connection status - client can already be connected
