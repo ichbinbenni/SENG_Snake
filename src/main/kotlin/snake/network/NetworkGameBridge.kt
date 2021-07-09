@@ -22,9 +22,11 @@ object NetworkGameBridge {
             val lobbyCode = it.first().toString()
             println("NetworkGameBridge.createLobby: Lobby created with code $lobbyCode")
             NetworkManager.socket?.on(EventFromServer.USER_JOINED_LOBBY.code) { joinLobbyPayload ->
+                println("NetworkGameBridge.createLobby: Lobby joined $lobbyCode")
                 callback(NetworkErrorCode.fromCode(joinLobbyPayload.firstOrNull()?.toString()?.toInt() ?: -1))
             }
-            NetworkManager.socket?.emit(EventToServer.JOIN_LOBBY.code, lobbyCode)
+            println("NetworkGameBridge.createLobby: Joining lobby... $lobbyCode")
+            NetworkManager.socket?.emit(EventToServer.JOIN_LOBBY.code, Gson().toJson(JoinLobbyModel(model.playerName, lobbyCode)))
         }
         NetworkManager.socket?.emit(EventToServer.CREATE_LOBBY.code, Gson().toJson(model))
     }
@@ -37,7 +39,7 @@ object NetworkGameBridge {
     fun joinLobby(model: JoinLobbyModel, callback: (NetworkErrorCode?) -> Unit) {
 
         NetworkManager.socket?.on(EventFromServer.USER_JOINED_LOBBY.code) {
-            println("NetworkGameBridge.joibLobby: Received join event")
+            println("NetworkGameBridge.joinLobby: Received join event")
             callback(NetworkErrorCode.fromCode(it.firstOrNull()?.toString()?.toInt() ?: -1))
         }
 
