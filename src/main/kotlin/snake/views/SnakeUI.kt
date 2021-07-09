@@ -63,6 +63,7 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
                 onGameStateChanged(it)
             }
         }
+        setWindowMinSize(400,400)
     }
 
     override fun onDock() {

@@ -20,9 +20,8 @@ class JoinLobbyController: Controller() {
         NetworkGameBridge.joinLobby(JoinLobbyModel(playerNameProperty.value, lobbyCodeProperty.value), callback = {
             println("MenuView.joinLobby: Joined")
             Platform.runLater {
-                // TODO: Show lobby waiting screen?
                 Game.playerName = playerNameProperty.value
-                MenuView.current?.replaceWith<SnakeUI>()
+                SnakeUI().openWindow()
             }
         })
     }

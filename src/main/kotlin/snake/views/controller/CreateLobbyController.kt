@@ -39,12 +39,8 @@ class CreateLobbyController: Controller() {
             println("MenuView.createLobby: Created")
             Platform.runLater {
                 Game.playerName = playerNameProperty.value
-                MenuView.current?.replaceWith<SnakeUI>()
+                SnakeUI().openWindow()
             }
         })
     }
-
-
-
-
 }
