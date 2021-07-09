@@ -24,11 +24,11 @@ class MenuView : View("Menu") {
             padding = Insets(8.0)
             font = Font.font(50.0)
         }
+
         label {
             text = "Made by some guys"
             padding = Insets(-8.0, 8.0,8.0,8.0)
         }
-
 
         rectangle {
             height = 120.0
@@ -38,14 +38,16 @@ class MenuView : View("Menu") {
         button {
             text = "Join Lobby"
             action {
-                MenuView.current?.replaceWith<JoinLobbyView>()
+                replaceWith(JoinLobbyView())
             }
+            padding = Insets(8.0, 18.0, 8.0, 8.0)
             disableProperty().bind(!controller.isConnected)
         }
+        
         button {
             text = "Create lobby"
             action {
-                MenuView.current?.replaceWith<CreateLobbyView>()
+                replaceWith(CreateLobbyView())
             }
             padding = Insets(8.0)
             disableProperty().bind(!controller.isConnected)

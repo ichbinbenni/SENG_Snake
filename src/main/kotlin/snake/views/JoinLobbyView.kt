@@ -20,39 +20,62 @@ class JoinLobbyView : View("Joining Lobby") {
 
 
     override val root: Parent = vbox {
-        label {
-            text = "Joining a Lobby"
-            font = Font.font(20.0)
-            padding = Insets(8.0)
-        }
-
-        label {
-            text = "Enter a Lobby code"
-            padding = Insets(8.0)
-        }
-
-        textfield {
-            promptText = "Lobby code"
-            textProperty().bindBidirectional(controller.lobbyCodeProperty)
-            padding = Insets(8.0)
-        }
-
-        label {
-            text = "Enter your Name"
-            padding = Insets(8.0)
-        }
-
-        textfield {
-            promptText = "Player name"
-            textProperty().bindBidirectional(controller.playerNameProperty)
-        }
-
-        button {
-            text = "Join Lobby"
-            action {
-                controller.joinLobby()
+        hbox {
+            button {
+                text = " < "
+                font = Font.font(20.0)
+                action {
+                    replaceWith(MenuView())
+                }
+                padding = Insets(4.0)
             }
-            padding = Insets(8.0)
+
+            label {
+                text = "Joining a Lobby"
+                font = Font.font(20.0)
+                padding = Insets(8.0, 8.0, 8.0, 50.0)
+            }
+        }
+
+        hbox {
+            label {
+                text = "Enter a Lobby code"
+                padding = Insets(8.0, 8.0, 20.0, 8.0)
+            }
+
+            textfield {
+                promptText = "Lobby code"
+                textProperty().bindBidirectional(controller.lobbyCodeProperty)
+                padding = Insets(8.0)
+            }
+        }
+
+        hbox {
+            label {
+                text = "Enter your Name"
+                padding = Insets(8.0, 20.0, 15.0, 8.0)
+            }
+
+            textfield {
+                promptText = "Player name"
+                textProperty().bindBidirectional(controller.playerNameProperty)
+                padding = Insets(8.0)
+            }
+        }
+
+        hbox {
+            rectangle {
+                width = 185.0
+                padding = Insets(8.0)
+            }
+
+            button {
+                text = "Join Lobby"
+                action {
+                    controller.joinLobby()
+                }
+                padding = Insets(8.0)
+            }
         }
 
         minWidth = 300.0
