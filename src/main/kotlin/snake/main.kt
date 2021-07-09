@@ -1,5 +1,8 @@
 package snake
 
+import gamelogic.Snake
+import javafx.application.Platform
+import javafx.stage.Modality
 import snake.network.NetworkManager
 import snake.views.MenuView
 import tornadofx.App
@@ -14,6 +17,7 @@ fun main(args: Array<String>) {
     NetworkManager.connect()
     // Show the menu view
     launch<SnakeApp>(args)
+
 }
 
 class SnakeApp: App(MenuView::class)

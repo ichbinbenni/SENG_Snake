@@ -1,8 +1,10 @@
 package snake.views
 
+import javafx.application.Platform
 import javafx.geometry.Insets
 import javafx.scene.Parent
 import javafx.scene.text.Font
+import javafx.stage.Modality
 import tornadofx.*
 import snake.views.controller.MenuController
 
@@ -46,7 +48,7 @@ class MenuView : View("Menu") {
                 MenuView.current?.replaceWith<CreateLobbyView>()
             }
             padding = Insets(8.0)
-            //disableProperty().bind(!controller.isConnected)
+            disableProperty().bind(!controller.isConnected)
         }
 
         label {
