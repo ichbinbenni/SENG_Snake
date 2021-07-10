@@ -1,23 +1,17 @@
 package snake.views;
 
 import gamelogic.SnakeDirection
-import javafx.scene.Node
+import javafx.application.Platform
+import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
-import javafx.scene.paint.Color
-import snake.gameLogic.GameStateListener
 import javafx.scene.paint.Paint
-import javafx.scene.shape.Circle
 import javafx.scene.shape.Rectangle
-import javafx.scene.text.Text
 import snake.gameLogic.Game
 import snake.gameLogic.Game.changePlayerDirection
-import snake.gameLogic.Game.gameStates
 import snake.gameLogic.GameState
-import tornadofx.View
-import tornadofx.colorpicker
-import tornadofx.pane
-import tornadofx.text
+import snake.gameLogic.GameStateListener
+import tornadofx.*
 
 class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
 
@@ -29,10 +23,22 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
     private var grid = arrayOf<Array<Rectangle>>()
 
     // MARK: - UI-Elements
-    override val root = pane {
+
+    private var topLabel: Label? = null
+
+    override val root = vbox {
+
+        topLabel = label {
+            text = "Name: ${Game.playerName}"
+        }
+
+    }
+
+
+    val gameBoard = pane {
         addEventFilter(KeyEvent.KEY_PRESSED) { event ->
             println("pressed: " + event.code)
-            when(event.code) {
+            when (event.code) {
                 KeyCode.UP, KeyCode.W -> changePlayerDirection(Game.playerName, SnakeDirection.NORTH)
                 KeyCode.DOWN, KeyCode.S -> changePlayerDirection(Game.playerName, SnakeDirection.SOUTH)
                 KeyCode.LEFT, KeyCode.A -> changePlayerDirection(Game.playerName, SnakeDirection.WEST)
@@ -40,7 +46,6 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
             }
         }
     }
-
 
 
     /*Initializes the GameBoard Grid, with multiple Rectangles, each Rectangle represents 1 Field of the Array*/
@@ -52,7 +57,7 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
             for (j in 0..BOARD_SIZE) {
                 var rect = Rectangle(i * RECTANGLE_SIZE, j * RECTANGLE_SIZE, RECTANGLE_SIZE, RECTANGLE_SIZE);
                 array += rect
-                root.add(rect)
+                gameBoard.add(rect)
             }
             grid += array
         }
@@ -63,23 +68,37 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
                 onGameStateChanged(it)
             }
         }
-        setWindowMinSize(400,400)
+        setWindowMinSize(400, 400)
     }
 
     override fun onDock() {
         root.requestFocus()
     }
 
-    //Still to do
-    fun gameEnded(gameState: GameState){
+
+    fun gameEnded(gameState: GameState) {
         gameState.snakes.forEach {
-            if(it.playerLost){
+            if (it.playerLost) {
+                Platform.runLater {
+                    imageview("/You Lose.jpg") {
+                        scaleX = 1.0
+                        scaleY = 1.0
+                    }
+                }
+            } else if (!it.playerLost && !gameState.gameIsRunning) {
+                Platform.runLater {
+                    imageview("/youWin.jpg") {
+                        scaleX = 1.0
+                        scaleY = 1.0
+                    }
+                }
             }
         }
     }
 
 
     override fun onGameStateChanged(gameState: GameState) {
+        gameEnded(gameState)
         println("SnakeUI.onGameStateChanged: Drawing field for new state")
         // Clear board  (draw all cells white)
         for (i in 0..BOARD_SIZE) {
@@ -88,6 +107,10 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
             }
         }
 
+        Platform.runLater() {
+            topLabel?.text = "Name: ${Game.playerName}  LobbyID: "
+            topLabel?.textFill = Paint.valueOf(gameState.snakes[0].snakeColor)
+        }
         /**
          * Draws all snakes in their colors
          */

@@ -33,8 +33,8 @@ object Game: GameStateHandler {
                 override fun run() {
                     gameStateListener?.onGameStateChanged(DummyData.gameStates[i])
                     i+=1
-                    if (i > 4) {
-                        i = 4
+                    if (i > 5) {
+                        i = 5
                     }
                     runTimer()
                 }
