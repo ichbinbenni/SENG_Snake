@@ -2,6 +2,7 @@ package snake.views
 
 import javafx.geometry.Insets
 import javafx.scene.Parent
+import javafx.scene.control.TextField
 import javafx.scene.text.Font
 import snake.views.controller.CreateLobbyController
 import snake.views.controller.JoinLobbyController
@@ -20,12 +21,17 @@ class JoinLobbyView : View("Joining Lobby") {
 
 
     override val root: Parent = vbox {
+        var lobbyCodeField: TextField? = null
+        var playerNameField: TextField? = null
+
         hbox {
             button {
                 text = " < "
                 font = Font.font(20.0)
                 action {
                     replaceWith(MenuView())
+                    lobbyCodeField?.text = ""
+                    playerNameField?.text = ""
                 }
                 padding = Insets(4.0)
             }
@@ -43,7 +49,7 @@ class JoinLobbyView : View("Joining Lobby") {
                 padding = Insets(8.0, 8.0, 20.0, 8.0)
             }
 
-            textfield {
+            lobbyCodeField = textfield {
                 promptText = "Lobby code"
                 textProperty().bindBidirectional(controller.lobbyCodeProperty)
                 padding = Insets(8.0)
@@ -56,7 +62,7 @@ class JoinLobbyView : View("Joining Lobby") {
                 padding = Insets(8.0, 20.0, 15.0, 8.0)
             }
 
-            textfield {
+            playerNameField = textfield {
                 promptText = "Player name"
                 textProperty().bindBidirectional(controller.playerNameProperty)
                 padding = Insets(8.0)
@@ -75,26 +81,11 @@ class JoinLobbyView : View("Joining Lobby") {
                     controller.joinLobby()
                 }
                 padding = Insets(8.0)
+                disableProperty().bind(playerNameField?.textProperty()?.isEmpty?.or(lobbyCodeField?.textProperty()?.isEmpty))
             }
         }
 
         minWidth = 300.0
         minHeight = 300.0
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.geometry.Insets
 import javafx.scene.Parent
+import javafx.scene.control.TextField
 import javafx.scene.text.Font
 import snake.views.controller.CreateLobbyController
 import snake.views.controller.MenuController
@@ -20,12 +21,15 @@ class CreateLobbyView : View("Create Lobby") {
     }
 
     override val root: Parent = vbox {
+        var playerNameField: TextField? = null
+
         hbox {
             button {
                 text = " < "
                 font = Font.font(20.0)
                 action {
                     replaceWith(MenuView())
+                    playerNameField?.text = ""
                 }
                 padding = Insets(4.0)
             }
@@ -43,7 +47,7 @@ class CreateLobbyView : View("Create Lobby") {
                 padding = Insets(8.0, 40.0, 20.0, 8.0)
             }
 
-            textfield {
+            playerNameField = textfield {
                 promptText = "Player name"
                 textProperty().bindBidirectional(controller.playerNameProperty)
                 padding = Insets(8.0)
@@ -92,6 +96,7 @@ class CreateLobbyView : View("Create Lobby") {
                     controller.createLobby()
                 }
                 padding = Insets(8.0)
+                disableProperty().bind(playerNameField?.textProperty()?.isEmpty)
             }
         }
 
