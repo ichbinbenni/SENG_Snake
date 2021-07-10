@@ -2,16 +2,20 @@ package snake.views;
 
 import gamelogic.SnakeDirection
 import javafx.application.Platform
+import javafx.scene.canvas.Canvas
 import javafx.scene.control.Label
+import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.paint.Paint
-import javafx.scene.shape.Rectangle
 import snake.gameLogic.Game
 import snake.gameLogic.Game.changePlayerDirection
 import snake.gameLogic.GameState
 import snake.gameLogic.GameStateListener
-import tornadofx.*
+import tornadofx.View
+import tornadofx.label
+import tornadofx.pane
+import tornadofx.vbox
 
 class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
 
@@ -19,23 +23,13 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
     private val RECTANGLE_SIZE = 20.0
     private val BOARD_SIZE = 30
 
-    // MARK: - Vars
-    private var grid = arrayOf<Array<Rectangle>>()
-
     // MARK: - UI-Elements
 
-    private var topLabel: Label? = null
-
-    override val root = vbox {
-
-        topLabel = label {
-            text = "Name: ${Game.playerName}"
-        }
-
+    private var topLabel: Label = label {
+        text = "Name: ${Game.playerName}"
     }
 
-
-    val gameBoard = pane {
+    private val gameBoard = pane {
         addEventFilter(KeyEvent.KEY_PRESSED) { event ->
             println("pressed: " + event.code)
             when (event.code) {
@@ -47,28 +41,26 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
         }
     }
 
+    override val root = vbox {
+    }
+
+    private var canvas = Canvas(RECTANGLE_SIZE*BOARD_SIZE, RECTANGLE_SIZE*BOARD_SIZE)
 
     /*Initializes the GameBoard Grid, with multiple Rectangles, each Rectangle represents 1 Field of the Array*/
 
     // MARK: - Lifecycle
     init {
-        for (i in 0..BOARD_SIZE) {
-            var array = arrayOf<Rectangle>()
-            for (j in 0..BOARD_SIZE) {
-                var rect = Rectangle(i * RECTANGLE_SIZE, j * RECTANGLE_SIZE, RECTANGLE_SIZE, RECTANGLE_SIZE);
-                array += rect
-                gameBoard.add(rect)
-            }
-            grid += array
-        }
+        root.children.add(topLabel)
+        gameBoard.children.add(canvas)
+        root.children.add(gameBoard)
 
         Game.gameStateListener = this
-        if (Game.gameStates.isEmpty() == false) {
+        if (Game.gameStates.isNotEmpty()) {
             Game.gameStates.lastOrNull()?.let {
                 onGameStateChanged(it)
             }
         }
-        setWindowMinSize(400, 400)
+        setWindowMinSize(RECTANGLE_SIZE*BOARD_SIZE+16, RECTANGLE_SIZE*BOARD_SIZE + 55)
     }
 
     override fun onDock() {
@@ -77,53 +69,68 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
 
 
     fun gameEnded(gameState: GameState) {
+        val graphicsContext2D = canvas.graphicsContext2D
+
         gameState.snakes.forEach {
             if (it.playerLost) {
-                Platform.runLater {
-                    imageview("/You Lose.jpg") {
-                        scaleX = 1.0
-                        scaleY = 1.0
-                    }
-                }
+                val image = Image("/You Lose.jpg")
+                graphicsContext2D.drawImage(
+                    image,
+                    canvas.width / 2 - image.width / 2,
+                    canvas.height / 2 - image.height / 2
+                )
             } else if (!it.playerLost && !gameState.gameIsRunning) {
-                Platform.runLater {
-                    imageview("/youWin.jpg") {
-                        scaleX = 1.0
-                        scaleY = 1.0
-                    }
-                }
+                val image = Image("/youWin.jpg")
+                graphicsContext2D.drawImage(
+                    image,
+                    canvas.width / 2 - image.width / 2,
+                    canvas.height / 2 - image.height / 2
+                )
             }
         }
     }
 
 
     override fun onGameStateChanged(gameState: GameState) {
-        gameEnded(gameState)
         println("SnakeUI.onGameStateChanged: Drawing field for new state")
+
+        val graphicsContext2D = canvas.graphicsContext2D
+
         // Clear board  (draw all cells white)
         for (i in 0..BOARD_SIZE) {
             for (j in 0..BOARD_SIZE) {
-                grid[i][j].fill = Paint.valueOf("#FFFFFF")
+                graphicsContext2D.fill = Paint.valueOf("#FFFFFF")
+                graphicsContext2D.fillRect(i * RECTANGLE_SIZE, j * RECTANGLE_SIZE, RECTANGLE_SIZE, RECTANGLE_SIZE)
             }
         }
 
         Platform.runLater() {
-            topLabel?.text = "Name: ${Game.playerName}  LobbyID: "
-            topLabel?.textFill = Paint.valueOf(gameState.snakes[0].snakeColor)
+            topLabel.text = "Name: ${Game.playerName}  LobbyID: "
+            topLabel.textFill = Paint.valueOf(gameState.snakes[0].snakeColor)
         }
         /**
          * Draws all snakes in their colors
          */
         gameState.snakes.forEach {
-            if (it.playerLost == false) {
-                println("SnakeUI.onGameStateChanged: Drawing head at position x${it.snakeHead.posX} y${it.snakeHead.posY} color:${it.snakeColor}")
-                grid[it.snakeHead.posX][it.snakeHead.posY].fill = Paint.valueOf(it.snakeColor)
+            println("SnakeUI.onGameStateChanged: Drawing head at position x${it.snakeHead.posX} y${it.snakeHead.posY} color:${it.snakeColor}")
+            graphicsContext2D.fill = Paint.valueOf(it.snakeColor)
 
-                it.snakeParts.forEach { part ->
-//                println("SnakeUI.onGameStateChanged: Drawing part at position x${part.posX} y${part.posY}")
-                    grid[part.posX][part.posY].fill = Paint.valueOf(it.snakeColor)
-                }
+            graphicsContext2D.fillOval(
+                it.snakeHead.posX * RECTANGLE_SIZE,
+                it.snakeHead.posY * RECTANGLE_SIZE,
+                RECTANGLE_SIZE,
+                RECTANGLE_SIZE
+            )
+
+            it.snakeParts.forEach { part ->
+                graphicsContext2D.fillRect(
+                    part.posX * RECTANGLE_SIZE,
+                    part.posY * RECTANGLE_SIZE,
+                    RECTANGLE_SIZE,
+                    RECTANGLE_SIZE
+                )
             }
         }
+        gameEnded(gameState)
     }
 }
