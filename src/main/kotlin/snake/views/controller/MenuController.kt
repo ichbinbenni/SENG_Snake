@@ -18,12 +18,6 @@ class MenuController: Controller() {
     var isConnected = booleanProperty(false)
     var isConnectedText= stringProperty("Connecting to server...")
 
-
-
-
-
-
-
     init {
         // Set initial connection status - client can already be connected
         setConnectedStatus()

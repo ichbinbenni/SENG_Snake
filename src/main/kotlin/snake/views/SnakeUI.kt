@@ -12,6 +12,7 @@ import snake.gameLogic.Game
 import snake.gameLogic.Game.changePlayerDirection
 import snake.gameLogic.GameState
 import snake.gameLogic.GameStateListener
+import snake.gameLogic.SnakeHead
 import tornadofx.View
 import tornadofx.label
 import tornadofx.pane
@@ -108,21 +109,27 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
             topLabel.text = "Name: ${Game.playerName}  LobbyID: ${Game.lobbyCode}"
             topLabel.textFill = Paint.valueOf(gameState.snakes[0].snakeColor)
         }
+
+        if(gameState.gameIsRunning == false) {
+            gameEnded(gameState)
+            return
+        }
+
         /**
          * Draws all snakes in their colors
          */
         gameState.snakes.forEach {
-            println("SnakeUI.onGameStateChanged: Drawing head at position x${it.snakeHead.posX} y${it.snakeHead.posY} color:${it.snakeColor}")
+            println("SnakeUI.onGameStateChanged: Drawing head at position x${it.snakeHead?.posX} y${it.snakeHead?.posY} color:${it.snakeColor}")
             graphicsContext2D.fill = Paint.valueOf(it.snakeColor)
 
             graphicsContext2D.fillOval(
-                it.snakeHead.posX * RECTANGLE_SIZE,
-                it.snakeHead.posY * RECTANGLE_SIZE,
+                (it.snakeHead?.posX ?: 0) * RECTANGLE_SIZE,
+                (it.snakeHead?.posY ?: 0) * RECTANGLE_SIZE,
                 RECTANGLE_SIZE,
                 RECTANGLE_SIZE
             )
 
-            it.snakeParts.forEach { part ->
+            it.snakeParts?.drop(1)?.forEach { part ->
                 graphicsContext2D.fillRect(
                     part.posX * RECTANGLE_SIZE,
                     part.posY * RECTANGLE_SIZE,
