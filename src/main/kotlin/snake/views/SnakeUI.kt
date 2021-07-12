@@ -73,20 +73,22 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
         val graphicsContext2D = canvas.graphicsContext2D
 
         gameState.snakes.forEach {
-            if (it.playerLost) {
-                val image = Image("/You Lose.jpg")
-                graphicsContext2D.drawImage(
-                    image,
-                    canvas.width / 2 - image.width / 2,
-                    canvas.height / 2 - image.height / 2
-                )
-            } else if (!it.playerLost && !gameState.gameIsRunning) {
-                val image = Image("/youWin.jpg")
-                graphicsContext2D.drawImage(
-                    image,
-                    canvas.width / 2 - image.width / 2,
-                    canvas.height / 2 - image.height / 2
-                )
+            if (it.snakeID == Game.playerName) {
+                if (it.playerLost) {
+                    val image = Image("/You Lose.jpg")
+                    graphicsContext2D.drawImage(
+                        image,
+                        canvas.width / 2 - image.width / 2,
+                        canvas.height / 2 - image.height / 2
+                    )
+                } else if (!it.playerLost && !gameState.gameIsRunning) {
+                    val image = Image("/youWin.jpg")
+                    graphicsContext2D.drawImage(
+                        image,
+                        canvas.width / 2 - image.width / 2,
+                        canvas.height / 2 - image.height / 2
+                    )
+                }
             }
         }
     }
