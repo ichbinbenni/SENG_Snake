@@ -64,7 +64,7 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
     }
 
     override fun onDock() {
-        root.requestFocus()
+        gameBoard.requestFocus()
     }
 
 
