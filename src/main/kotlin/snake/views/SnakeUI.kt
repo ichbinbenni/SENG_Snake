@@ -109,7 +109,7 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
 
         Platform.runLater() {
             topLabel.text = "Name: ${Game.playerName}  LobbyID: ${Game.lobbyCode}"
-            topLabel.textFill = Paint.valueOf(gameState.snakes[0].snakeColor)
+            topLabel.textFill = Paint.valueOf(gameState.snakes.firstOrNull { it.snakeID == Game.playerName }?.snakeColor)
         }
 
         if(gameState.gameIsRunning == false) {
