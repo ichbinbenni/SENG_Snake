@@ -2,6 +2,7 @@ package snake.network
 
 import com.google.gson.Gson
 import gamelogic.SnakeDirection
+import snake.gameLogic.Game
 import snake.network.EventCodes.EventFromServer
 import snake.network.EventCodes.EventToServer
 import snake.network.Models.CreateLobbyModel
@@ -22,6 +23,7 @@ object NetworkGameBridge {
             val lobbyCode = it.first().toString()
             println("NetworkGameBridge.createLobby: Lobby created with code $lobbyCode")
             NetworkManager.socket?.on(EventFromServer.USER_JOINED_LOBBY.code) { joinLobbyPayload ->
+                Game.lobbyCode = lobbyCode
                 println("NetworkGameBridge.createLobby: Lobby joined $lobbyCode")
                 callback(NetworkErrorCode.fromCode(joinLobbyPayload.firstOrNull()?.toString()?.toInt() ?: -1))
             }
@@ -39,6 +41,7 @@ object NetworkGameBridge {
     fun joinLobby(model: JoinLobbyModel, callback: (NetworkErrorCode?) -> Unit) {
 
         NetworkManager.socket?.on(EventFromServer.USER_JOINED_LOBBY.code) {
+            Game.lobbyCode = model.lobbyCode
             println("NetworkGameBridge.joinLobby: Received join event")
             callback(NetworkErrorCode.fromCode(it.firstOrNull()?.toString()?.toInt() ?: -1))
         }

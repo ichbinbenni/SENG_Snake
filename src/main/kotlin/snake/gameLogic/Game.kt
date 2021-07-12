@@ -8,6 +8,7 @@ object Game: GameStateHandler {
     var gameStateListener: GameStateListener? = null
     var gameStates = arrayListOf<GameState>()
     var playerName: String = "Need to be set"
+    var lobbyCode: String = "Need to be set"
     // gamesize
     //
 

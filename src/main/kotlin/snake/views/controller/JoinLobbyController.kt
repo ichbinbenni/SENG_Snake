@@ -25,7 +25,4 @@ class JoinLobbyController: Controller() {
             }
         })
     }
-
-
-
 }
