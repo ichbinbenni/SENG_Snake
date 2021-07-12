@@ -34,7 +34,7 @@ class CreateLobbyController: Controller() {
             playerCount = 2
         }
 
-        println("MenuView.createLobby: Creating lobby ${playerNameProperty.value}")
+        println("MenuView.createLobby: Creating lobby ${playerNameProperty.value} numberOFPlayers: $playerMode")
         NetworkGameBridge.createLobby(CreateLobbyModel(playerCount, FieldSize(this.size,this.size), playerNameProperty.value), callback = {
             println("MenuView.createLobby: Created")
             Platform.runLater {

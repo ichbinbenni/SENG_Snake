@@ -76,12 +76,8 @@ class CreateLobbyView : View("Create Lobby") {
                 padding = Insets(8.0, 102.0, 15.0, 8.0)
             }
 
-            val playerMode = FXCollections.observableArrayList("1 Player", "2 Player")
-
-            val modeChoosen = SimpleStringProperty()
-            modeChoosen.bindBidirectional(controller.playerMode)
-
-            combobox(modeChoosen, playerMode).value = "1 Player"
+            val playerModes = FXCollections.observableArrayList("1 Player", "2 Player")
+            combobox(controller.playerMode, playerModes).value = "1 Player"
         }
 
         hbox {
