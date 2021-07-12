@@ -27,7 +27,7 @@ class SnakeUI() : View("Snake-Multiplayer"), GameStateListener {
     // MARK: - UI-Elements
 
     private var topLabel: Label = label {
-        text = "Name: ${Game.playerName}"
+        text = "Name: ${Game.playerName} LobbyCode: ${Game.lobbyCode}"
     }
 
     private val gameBoard = pane {
